@@ -3,8 +3,10 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const mongoString = process.env.DATABASE_URL;
+const routes = require('./routes/routes');
 
-mongoose.connect(mongoString);
+console.log('db connection',mongoString)
+mongoose.connect(mongoString, { useNewUrlParser: true });
 const database = mongoose.connection;
 
 database.on('error', (error) => {
@@ -17,6 +19,7 @@ database.once('connected', () => {
 const app = express();
 
 app.use(express.json());
+app.use('/api', routes)
 
 app.listen(3000, () => {
     console.log(`Server Started at ${3000}`)

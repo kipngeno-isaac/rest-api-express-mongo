@@ -1,21 +1,9 @@
-require('dotenv').config();
-
+require('./src/database/connection')
 const express = require('express');
-const mongoose = require('mongoose');
-const mongoString = process.env.DATABASE_URL;
-const routes = require('./routes/routes');
+const routes = require('./src/routes/routes');
 
-console.log('db connection',mongoString)
-mongoose.connect(mongoString, { useNewUrlParser: true });
-const database = mongoose.connection;
 
-database.on('error', (error) => {
-    console.log(error)
-})
 
-database.once('connected', () => {
-    console.log('Database Connected');
-})
 const app = express();
 
 app.use(express.json());

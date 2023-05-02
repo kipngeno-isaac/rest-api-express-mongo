@@ -28,9 +28,14 @@ catch (error){
 }
 })
 
-router.get('/getOne/:id', (req, res)=>{
-
-    res.send(req.params.id)
+router.get('/getOne/:id', async (req, res)=>{
+try {
+    const data = await Model.findById(req.params.id);
+    res.json(data)
+}
+catch (error){
+    res.status(500).json({message: error.message})
+}
 })
 
 router.patch('/update/:id', (req, res)=>{

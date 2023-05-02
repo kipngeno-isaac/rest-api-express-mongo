@@ -38,8 +38,19 @@ catch (error){
 }
 })
 
-router.patch('/update/:id', (req, res)=>{
-    res.send('Update by ID API')
+router.patch('/update/:id', async (req, res)=>{
+try {
+    const id = req.params.id;
+    const updateData = req.body;
+    const options = {new: true};
+
+    const result = await Model.findByIdAndUpdate(id, updateData, options)
+
+    res.send(result)
+}
+catch (error){
+    res.status(400).json({message: error.message})
+}
 })
 
 router.delete('/delete/:id', (req, res) =>{
